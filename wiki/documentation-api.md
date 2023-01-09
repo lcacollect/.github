@@ -33,10 +33,10 @@ project that uses that reporting schema.
 
 ```python
 class SchemaTemplate:
-id: str
-name: str
-original: ReportingSchema
-schemas: list[ReportingSchema]
+    id: str
+    name: str
+    original: ReportingSchema
+    schemas: list[ReportingSchema]
 ```
 
 #### Reporting Schema
@@ -45,43 +45,43 @@ When the reporting schema is a template, then it will not have a `project_id`.
 
 ```python
 class ReportingSchema:
-id: str
-name: str
-project: Project | None
-template: SchemaTemplate
-repository: Repository
-tasks: list[Task]
-categories: list[SchemaCategory]
+    id: str
+    name: str
+    project: Project | None
+    template: SchemaTemplate
+    repository: Repository
+    tasks: list[Task]
+    categories: list[SchemaCategory]
 ```
 
 #### Schema Category
 
 ```python
 class SchemaCategory:
-id: str
-path: str
-name: str
-description: str
-reporting_schema: ReportingSchema
-elements: list[SchemaElements]
-commits: list[Commit]
-tasks: list[Task]
+    id: str
+    path: str
+    name: str
+    description: str
+    reporting_schema: ReportingSchema
+    elements: list[SchemaElements]
+    commits: list[Commit]
+    tasks: list[Task]
 ```
 
 #### Schema Element
 
 ```python
 class SchemaElement:
-id: str
-name: str
-quantity: float
-unit: str
-description: str
-result: dict
-source: ProjectSource
-category: SchemaCategory
-tasks: Task
-commits: Commit
+    id: str
+    name: str
+    quantity: float
+    unit: str
+    description: str
+    result: dict
+    source: ProjectSource
+    category: SchemaCategory
+    tasks: Task
+    commits: Commit
 ```
 
 ### Project Source
@@ -93,17 +93,17 @@ extend the list of data source types as we go.
 
 ```python
 class ProjectSource:
-id: str
-type: str
-data_id: str
-name: str
-project: Project
-meta_fields: dict
-elements: list[SchemaElement]
-interpretation: dict
-author: ProjectMember
-updated: datetime
-data: tuple[list[str], list[dict]]
+    id: str
+    type: str
+    data_id: str
+    name: str
+    project: Project
+    meta_fields: dict
+    elements: list[SchemaElement]
+    interpretation: dict
+    author: ProjectMember
+    updated: datetime
+    data: tuple[list[str], list[dict]]
 ```
 
 ### Version Control
@@ -119,10 +119,10 @@ The repository will contain references to all the commits and to the reporting s
 
 ```python
 class Repository:
-id: str
-reporting_schema: ReportingSchema
-commits: list[Commit]
-head: Commit
+    id: str
+    reporting_schema: ReportingSchema
+    commits: list[Commit]
+    head: Commit
 ```
 
 #### Commit
@@ -133,15 +133,15 @@ categories.
 
 ```python
 class Commit:
-id: str
-added: datetime
-parent: Commit
-repository: Repository
-author: ProjectMemer
-schema_categories: list[SchemaCategory]
-schema_elements: list[SchemaElement]
-tasks: list[Task]
-tags: list[Tag]
+    id: str
+    added: datetime
+    parent: Commit
+    repository: Repository
+    author: ProjectMemer
+    schema_categories: list[SchemaCategory]
+    schema_elements: list[SchemaElement]
+    tasks: list[Task]
+    tags: list[Tag]
 ```
 
 #### Tag
@@ -149,11 +149,11 @@ tags: list[Tag]
 A Tag can be added to a commit, so that users can easily find a certain point-in-time by the tag name
 ```python
 class Tag:
-id: str
-author: ProjectMember
-added: datetime
-name: str
-commit: Commit
+    id: str
+    author: ProjectMember
+    added: datetime
+    name: str
+    commit: Commit
 ```
 
 ### Tasks
@@ -165,15 +165,15 @@ The task be assigneed a `TaskStatus` of either `Pending`, `Completed` or `Approv
 
 ```python
 class Task:
-id: str
-name: str
-description: str
-due_date: date
-owner: ProjectMember
-assignee: ProjectMember | ProjectGroup
-status: TaskStatus
-comments: list[Comment]
-item: SchemaElement | SchemaCategory
+    id: str
+    name: str
+    description: str
+    due_date: date
+    owner: ProjectMember
+    assignee: ProjectMember | ProjectGroup
+    status: TaskStatus
+    comments: list[Comment]
+    item: SchemaElement | SchemaCategory
 ```
 
 The `Comment` class is an implementation such that users can write comments to tasks and thereby communicate through the platform,
@@ -181,9 +181,9 @@ if something is unclear in the task description.
 
 ```python
 class Comment:
-id: str
-owner: ProjectMember
-text: str
-added: date
-task: Task
+    id: str
+    owner: ProjectMember
+    text: str
+    added: date
+    task: Task
 ```

@@ -15,19 +15,19 @@ It is a essential object as it connects, groups, members, project sources and re
 
 ```python
 class Project:
-id: str
-project_id: str | None
-name: str
-client: str | None
-domain: str | None
-address: str | None
-city: str | None
-country: str | None
-image_url: str | None
-groups: list[ProjectGroup]
-stages: list[ProjectStage]
-members: list[ProjectMember]
-meta_fields: dict
+    id: str
+    project_id: str | None
+    name: str
+    client: str | None
+    domain: str | None
+    address: str | None
+    city: str | None
+    country: str | None
+    image_url: str | None
+    groups: list[ProjectGroup]
+    stages: list[ProjectStage]
+    members: list[ProjectMember]
+    meta_fields: dict
 ```
 
 ### Project Group
@@ -37,11 +37,11 @@ A group can have a project member as lead, which becomes responsible for that gr
 
 ```python
 class ProjectGroup:
-id: str
-name: str
-project: Project
-members: list[ProjectMember]
-lead: ProjectMember | None
+    id: str
+    name: str
+    project: Project
+    members: list[ProjectMember]
+    lead: ProjectMember | None
 ```
 
 ### Project Member
@@ -52,11 +52,11 @@ User information, such as email and name is not stored on the project member obj
 
 ```python
 class ProjectMember:
-id: str
-user_id: str
-project_groups: list[ProjectGroup]
-leader_of: list[ProjectGroup]
-project: Project
+    id: str
+    user_id: str
+    project_groups: list[ProjectGroup]
+    leader_of: list[ProjectGroup]
+    project: Project
 ```
 
 ### Project Stage
@@ -65,8 +65,8 @@ The `ProjectStage` class is a link model to create many-to-many relationships be
 
 ```python
 class ProjectStage:
-project: Project
-stage: LifeCycleStage
+    project: Project
+    stage: LifeCycleStage
 ```
 
 ### Life Cycle Stage
@@ -75,9 +75,9 @@ The `LifeCycleStage` is an object to represent the different life cycle stages u
 
 ```python
 class LifeCycleStage:
-id: str
-name: str
-category: str
-phase: str
-projects: list[Project]
+    id: str
+    name: str
+    category: str
+    phase: str
+    projects: list[Project]
 ```
