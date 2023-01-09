@@ -20,5 +20,5 @@ Try LCAcollect at [https://lcacollect.dk](https://doc.arkitema.com)
 
 ## IT Architecture
 
-![IT Architecture](it-architecture.png)
+![IT Architecture](/profile/it-architecture.png)
 
