@@ -22,3 +22,4 @@ Try LCAcollect at [https://lcacollect.dk](https://doc.arkitema.com)
 
 ![IT Architecture](/profile/it-architecture.png)
 
+If you can find further documentation on the implementation of LCAcollect [here](/wiki/README.md) or for technical documentation visit the code repos.
