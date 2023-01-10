@@ -1,6 +1,6 @@
 # LCAcollect
 
-Try LCAcollect at [https://lcacollect.dk](https://doc.arkitema.com)
+Try LCAcollect at [https://www.lcacollect.dk](https://www.lcacollect.dk)
 
 # What is LCAcollect?
 
