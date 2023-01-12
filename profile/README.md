@@ -1,10 +1,28 @@
 # LCAcollect
 
+![logo](/logos/Logo_Horisontal Low.svg)
+
 Try LCAcollect at [https://www.lcacollect.dk](https://www.lcacollect.dk)
 
 # What is LCAcollect?
 
+LCAcollect - A common solution for the AEC industry for documenting buildings' environmental impact through LCA.
+The building industry have to optimize their CO₂ footprint the next coming years.
+
+New requirements have been added to the Danish building law by the 1st of January 2023.
+These new requirements will gradually be tightened - it is therefore critical that the building industry gathers experiences over the coming years -
+so we can create an even better and realistic base for a greener building industry in the future.
+
+LCAcollect.dk ensures LCA documentation in a structured and standardized format, which gives the industry the possibilities to share experiences and results in a comprehensive way.
+
+We are sharing our learnings and experiences with the industry, state and research institutions.
+
 # Open Source
+LCAcollect is a open source initiative.
+
+It means that everyone can download the source code and contribute with features, bug fixes and larger development activities.
+
+It is essential that the building industry can initiate a collective action for the green transition - that is why LCAcollect invites everyone to participate in our community on GitHub.
 
 ## Code Repos:
 - [Frontend](https://github.com/lcacollect/frontend)
