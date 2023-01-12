@@ -1,6 +1,6 @@
 # LCAcollect
 
-![Logo](/logos/Logo_Horisontal.svg)
+![Logo](/logos/Logo_Horisontal_Low.png)
 
 Try LCAcollect at [https://www.lcacollect.dk](https://www.lcacollect.dk)
 
