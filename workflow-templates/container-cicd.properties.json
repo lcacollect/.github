@@ -1,11 +1,5 @@
 {
   "name": "Python Container CI/CD Workflow",
   "description": "CI/CD Workflow for Python backend APIs",
-  "iconName": "octicon container",
-  "categories": [
-    "Python"
-  ],
-  "filePatterns": [
-    "^Dockerfile",
-  ]
+  "iconName": "octicon container"
 }
