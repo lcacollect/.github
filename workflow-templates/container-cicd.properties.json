@@ -1,0 +1,12 @@
+{
+  "name": "Python Container CI/CD Workflow",
+  "description": "CI/CD Workflow for Python backend APIs",
+  "iconName": "container-icon",
+  "categories": [
+    "Python"
+  ],
+  "filePatterns": [
+    "src/**/*\.py$",
+    "^Dockerfile",
+  ]
+}
