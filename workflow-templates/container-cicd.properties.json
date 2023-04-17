@@ -6,7 +6,6 @@
     "Python"
   ],
   "filePatterns": [
-    "src/**/*\.py$",
     "^Dockerfile",
   ]
 }
