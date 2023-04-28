@@ -23,7 +23,7 @@ jobs:
           pipenv sync --dev
       
       - name: Check Formatting
-        run: pipenv run black --check
+        run: pipenv run black . --check
 
       - name: Check ISort
         run: pipenv run isort --check

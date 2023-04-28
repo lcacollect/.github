@@ -13,7 +13,7 @@ on:
 
 jobs:
   build-image:
-    name: Build abd Push Image
+    name: Build and Push Image
     runs-on: ubuntu-latest
     permissions:
       contents: read
