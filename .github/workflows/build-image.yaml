@@ -31,8 +31,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Build Image
-        run: docker build -t ${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }} .
+        run: docker build -t ghcr.io/${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }} .
 
       - name: Push Image
         if: github.event_name != 'pull_request'
-        run: docker push ${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }}
+        run: docker push ghcr.io/${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }}
