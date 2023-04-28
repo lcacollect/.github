@@ -1,0 +1,15 @@
+on:
+  workflow_call:
+
+jobs:
+  publish-schema:
+    name: Publish GraphQL Schema
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Upload GraphQL Schema
+        uses: actions/upload-artifact@v3
+        with:
+          name: graphql-schema
+          path: ./graphql

@@ -1,0 +1,38 @@
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      registry:
+        required: true
+        type: string
+      name:
+        required: true
+        type: string
+
+jobs:
+  build-image:
+    name: Build abd Push Image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ${{ inputs.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build Image
+        run: docker build -t ${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }} .
+
+      - name: Push Image
+        if: github.event_name != 'pull_request'
+        run: docker push ${{ inputs.registry }}/${{ inputs.name }}:${{ inputs.tag }}

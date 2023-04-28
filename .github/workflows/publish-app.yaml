@@ -1,0 +1,24 @@
+on:
+  workflow_call:
+    inputs:
+      artifact-name:
+        required: false
+        type: string
+        default: "lcacollect-app"
+
+jobs:
+  publish-app:
+    name: Publish App
+    runs-on: ubuntu-latest
+    steps:
+        - name: Download artifact from build job
+          uses: actions/download-artifact@v3
+          with:
+            name: ${{ inputs.artifact-name }}
+
+        - name: Upload to Azure
+          uses: azure/CLI@v1
+          with:
+            inlineScript: |
+              az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.AZURE_STORAGE_ACCOUNT }} --source ${{ vars.BUNDLES_CONTAINER_NAME}} --pattern "bundles/${{ env.APP_NAME }}/main/*"
+              az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.AZURE_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.BUNDLES_CONTAINER_NAME}} --destination-path "bundles/${{ env.APP_NAME }}/main" -s .

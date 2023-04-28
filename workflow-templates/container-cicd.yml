@@ -7,11 +7,17 @@ on:
     branches: [ $default-branch ]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Run a one-line script
-        run: echo Hello from Octo Organization
+  test:
+    uses: lcacollect/.github/.github/workflows/test-python.yaml@main
+  publish-schema:
+    if: github.event_name != 'pull_request'
+    uses: lcacollect/.github/.github/workflows/publish-graphql.yaml@main
+  build-container:
+    uses: lcacollect/.github/.github/workflows/build-image.yaml@main
+    with:
+      tag: ${{ github.run_number }}
+      registry: ""
+      name: ""
+#  publishchart:
+#    if: github.event_name != 'pull_request'
+#    uses: lcacollect/.github/.github/workflows/publish-chart.yaml@main

@@ -1,0 +1,72 @@
+on:
+  workflow_call:
+    inputs:
+      run-e2e:
+        required: false
+        type: boolean
+        default: false
+      node-version:
+        required: false
+        type: string
+        default: "18.x"
+      router-url:
+        required: true
+        type: string
+      artifact-name:
+        required: false
+        type: string
+        default: "lcacollect-app"
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.node-version }}
+          cache: "npm"
+      - name: Install
+        run: npm ci
+    
+      - name: Lint
+        run: npm run lint
+
+      - name: Format
+        run: npm run format
+
+      - name: Unit Tests
+        run: npm run test
+
+      - name: E2E Tests
+        run: npm run e2e
+        env:
+          TERM: xterm
+          VITE_APOLLO_ROUTER_URL: "http://localhost:4000/graphql"
+          VITE_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
+          VITE_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
+          VITE_AAD_APP_CLIENT_ID: ${{ vars.VITE_AAD_APP_CLIENT_ID }}
+          VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
+          CYPRESS_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
+          CYPRESS_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
+          CYPRESS_AAD_APP_CLIENT_SECRET: ${{ secrets.CYPRESS_AAD_APP_CLIENT_SECRET }}
+          CYPRESS_TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
+          CYPRESS_TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
+      
+      - name: Build
+        run: npm run build
+        env:
+          VITE_APOLLO_ROUTER_URL: ${{ inputs.router-url }}
+          VITE_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
+          VITE_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
+          VITE_AAD_APP_CLIENT_ID: ${{ vars.VITE_AAD_APP_CLIENT_ID }}
+          VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
+
+      - name: Upload Artifact for Deployment
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ inputs.artifact-name }}
+          path: ./dist
