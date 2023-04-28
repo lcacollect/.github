@@ -26,7 +26,7 @@ jobs:
         run: pipenv run black . --check
 
       - name: Check ISort
-        run: pipenv run isort --check
+        run: pipenv run isort . --check
 
       - name: Run PyTest
         run:  pipenv run pytest
