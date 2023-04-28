@@ -1,0 +1,46 @@
+on:
+  workflow_call:
+    inputs:
+      tag:
+        required: true
+        type: string
+      registry:
+        required: true
+        type: string
+      name:
+        required: true
+        type: string
+
+jobs:
+  build-image:
+    name: Package and Push Chart
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
+        with:
+          registry: ghcr.io/${{ inputs.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Render Chart
+        run: helm template ${{ inputs.name }} .
+        working-directory: helm
+      
+      - name: Package Chart
+        run: helm package --version 1.0.${{ inputs.tag }} .
+        working-directory: helm
+
+      - name: Push Chart
+        if: github.event_name != 'pull_request'
+        run: helm push ${{ inputs.name }}-1.0.${{ inputs.tag }}.tgz oci://ghcr.io/${{ inputs.registry }}/helm
+        working-directory: helm
+        env:
+          HELM_EXPERIMENTAL_OCI: 1
