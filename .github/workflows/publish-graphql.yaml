@@ -29,4 +29,4 @@ jobs:
         with:
           inlineScript: |
             az storage blob delete-batch --sas-token ${{ secrets.azure-credentials }} --account-name ${{ inputs.storage-account }} --source ${{ inputs.container-name }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
-            az storage blob upload-batch --sas-token ${{ secrets.azure-credentials }} --account-name ${{ inputs.storage-account }} --auth-mode key -d ${{ inputs.container-name }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/
+            az storage blob upload-batch --sas-token ${{ secrets.azure-credentials }} --account-name ${{ inputs.storage-account }} --auth-mode key -d ${{ inputs.container-name }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}" -s graphql/
