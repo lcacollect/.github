@@ -1,5 +1,12 @@
 on:
   workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      branch:
+        required: true
+        type: string
 
 jobs:
   publish-schema:
@@ -8,8 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Upload GraphQL Schema
-        uses: actions/upload-artifact@v3
-        with:
-          name: graphql-schema
-          path: ./graphql
+      - name: Upload to Azure
+          uses: azure/CLI@v1
+          with:
+            inlineScript: |
+              az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --source ${{ vars.GRAPHQL_CONTAINER_NAME }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
+              az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.GRAPHQL_CONTAINER_NAME }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/schema.graphql
