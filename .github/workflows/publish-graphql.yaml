@@ -7,6 +7,13 @@ on:
       branch:
         required: true
         type: string
+      storage-account:
+        required: true
+      container-name:
+        required: true
+    secrets:
+      azure-credentials:
+        required: true
 
 jobs:
   publish-schema:
@@ -19,5 +26,5 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --source ${{ vars.GRAPHQL_CONTAINER_NAME }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
-            az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.GRAPHQL_CONTAINER_NAME }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/schema.graphql
+            az storage blob delete-batch --sas-token ${{ secrets.azure-credentials }} --account-name ${{ inputs.storage-account }} --source ${{ inputs.container-name }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
+            az storage blob upload-batch --sas-token ${{ secrets.azure-credentials }} --account-name ${{ inputs.storage-account }} --auth-mode key -d ${{ inputs.container-name }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/schema.graphql
