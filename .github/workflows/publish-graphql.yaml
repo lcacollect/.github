@@ -9,8 +9,10 @@ on:
         type: string
       storage-account:
         required: true
+        type: string
       container-name:
         required: true
+        type: string
     secrets:
       azure-credentials:
         required: true
