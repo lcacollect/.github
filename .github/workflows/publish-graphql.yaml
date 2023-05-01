@@ -16,8 +16,8 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: Upload to Azure
-          uses: azure/CLI@v1
-          with:
-            inlineScript: |
-              az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --source ${{ vars.GRAPHQL_CONTAINER_NAME }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
-              az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.GRAPHQL_CONTAINER_NAME }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/schema.graphql
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --source ${{ vars.GRAPHQL_CONTAINER_NAME }} --pattern "${{ inputs.name }}/${{ inputs.branch }}/*"
+            az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.PRODUCTION_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.GRAPHQL_CONTAINER_NAME }} --destination-path "${{ inputs.name }}/${{ inputs.branch }}/*" -s graphql/schema.graphql
