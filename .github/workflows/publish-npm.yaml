@@ -17,10 +17,13 @@ jobs:
     name: Publish NPM Package
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Download Artifact from Build Job
         uses: actions/download-artifact@v3
         with:
           name: ${{ inputs.artifact_name }}
+          path: ./dist
 
       - uses: actions/setup-node@v3
         with:
