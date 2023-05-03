@@ -1,10 +1,19 @@
 on:
   workflow_call:
     inputs:
-      artifact-name:
+      artifact_name:
         required: false
         type: string
         default: "lcacollect-app"
+      storage_account:
+        required: true
+        type: string
+      container_name:
+        required: true
+        type: string
+    secrets:
+      azure_credentials:
+        required: true
 
 jobs:
   publish-app:
@@ -14,11 +23,19 @@ jobs:
         - name: Download artifact from build job
           uses: actions/download-artifact@v3
           with:
-            name: ${{ inputs.artifact-name }}
+            name: ${{ inputs.artifact_name }}
 
         - name: Upload to Azure
           uses: azure/CLI@v1
           with:
             inlineScript: |
-              az storage blob delete-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.AZURE_STORAGE_ACCOUNT }} --source ${{ vars.BUNDLES_CONTAINER_NAME}} --pattern "bundles/${{ env.APP_NAME }}/main/*"
-              az storage blob upload-batch --sas-token ${{ secrets.AZURE_CREDENTIALS }} --account-name ${{ vars.AZURE_STORAGE_ACCOUNT }} --auth-mode key -d ${{ vars.BUNDLES_CONTAINER_NAME}} --destination-path "bundles/${{ env.APP_NAME }}/main" -s .
+              az storage blob delete-batch \
+                --sas-token ${{ secrets.azure_credentials }} \
+                --account-name ${{ inputs.storage_account }} \
+                --source ${{ inputs.container_name }} \
+                --pattern "/*"
+              az storage blob upload-batch \
+                --sas-token ${{ secrets.azure_credentials }} \
+                --account-name ${{ inputs.storage_account }} \
+                --auth-mode key -d ${{ inputs.container_name }} \
+                --destination-path "/" -s .

@@ -1,13 +1,16 @@
 on:
   workflow_call:
     inputs:
-      artifact-name:
+      artifact_name:
         required: true
         type: string
-      node-version:
+      node_version:
         required: false
         type: string
         default: "18.x"
+    secrets:
+      npm_token:
+        required: true
 
 jobs:
   publish-package:
@@ -17,13 +20,13 @@ jobs:
       - name: Download Artifact from Build Job
         uses: actions/download-artifact@v3
         with:
-          name: ${{ inputs.artifact-name }}
+          name: ${{ inputs.artifact_name }}
 
       - uses: actions/setup-node@v3
         with:
-          node-version: ${{ inputs.node-version }}
+          node-version: ${{ inputs.node_version }}
           registry-url: https://registry.npmjs.org/
       
       - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}

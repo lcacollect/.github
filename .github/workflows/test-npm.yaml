@@ -1,21 +1,39 @@
 on:
   workflow_call:
     inputs:
-      run-e2e:
+      run_e2e:
         required: false
         type: boolean
         default: false
-      node-version:
+      node_version:
         required: false
         type: string
         default: "18.x"
-      router-url:
+      router_url:
         required: true
         type: string
-      artifact-name:
+      artifact_name:
         required: false
         type: string
         default: "lcacollect-app"
+      aad_client_id:
+        required: true
+        type: string
+      aad_tenant_id:
+        required: true
+        type: string
+      aad_app_client_id:
+        required: true
+        type: string
+    secrets:
+      VITE_MUI_LICENSE:
+        required: true
+      CYPRESS_AAD_APP_CLIENT_SECRET:
+        required: false
+      CYPRESS_TEST_USER_EMAIL:
+        required: false
+      CYPRESS_TEST_USER_PASSWORD:
+        required: false
 
 jobs:
   test:
@@ -27,7 +45,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ inputs.node-version }}
+          node-version: ${{ inputs.node_version }}
           cache: "npm"
       - name: Install
         run: npm ci
@@ -43,15 +61,16 @@ jobs:
 
       - name: E2E Tests
         run: npm run e2e
+        if: ${{ inputs.run_e2e }}
         env:
           TERM: xterm
           VITE_APOLLO_ROUTER_URL: "http://localhost:4000/graphql"
-          VITE_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
-          VITE_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
-          VITE_AAD_APP_CLIENT_ID: ${{ vars.VITE_AAD_APP_CLIENT_ID }}
+          VITE_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
+          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          VITE_AAD_APP_CLIENT_ID: ${{ inputs.aad_app_client_id }}
           VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
-          CYPRESS_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
-          CYPRESS_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
+          CYPRESS_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          CYPRESS_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
           CYPRESS_AAD_APP_CLIENT_SECRET: ${{ secrets.CYPRESS_AAD_APP_CLIENT_SECRET }}
           CYPRESS_TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
           CYPRESS_TEST_USER_PASSWORD: ${{ secrets.CYPRESS_TEST_USER_PASSWORD }}
@@ -59,14 +78,15 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_APOLLO_ROUTER_URL: ${{ inputs.router-url }}
-          VITE_AAD_CLIENT_ID: ${{ vars.VITE_AAD_CLIENT_ID }}
-          VITE_AAD_TENANT_ID: ${{ vars.VITE_AAD_TENANT_ID }}
-          VITE_AAD_APP_CLIENT_ID: ${{ vars.VITE_AAD_APP_CLIENT_ID }}
+          VITE_APOLLO_ROUTER_URL: ${{ inputs.router_url }}
+          VITE_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
+          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          VITE_AAD_APP_CLIENT_ID: ${{ inputs.aad_app_client_id }}
           VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
 
       - name: Upload Artifact for Deployment
         uses: actions/upload-artifact@v3
+        if: github.event_name != 'pull_request'
         with:
-          name: ${{ inputs.artifact-name }}
+          name: ${{ inputs.artifact_name }}
           path: ./dist
