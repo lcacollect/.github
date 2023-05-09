@@ -66,10 +66,10 @@ jobs:
           TERM: xterm
           VITE_APOLLO_ROUTER_URL: "http://localhost:4000/graphql"
           VITE_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
-          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant_id }}
           VITE_AAD_APP_CLIENT_ID: ${{ inputs.aad_app_client_id }}
           VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
-          CYPRESS_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          CYPRESS_AAD_TENANT_ID: ${{ inputs.aad_tenant_id }}
           CYPRESS_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
           CYPRESS_AAD_APP_CLIENT_SECRET: ${{ secrets.CYPRESS_AAD_APP_CLIENT_SECRET }}
           CYPRESS_TEST_USER_EMAIL: ${{ secrets.CYPRESS_TEST_USER_EMAIL }}
@@ -80,7 +80,7 @@ jobs:
         env:
           VITE_APOLLO_ROUTER_URL: ${{ inputs.router_url }}
           VITE_AAD_CLIENT_ID: ${{ inputs.aad_client_id }}
-          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant.id }}
+          VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant_id }}
           VITE_AAD_APP_CLIENT_ID: ${{ inputs.aad_app_client_id }}
           VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
 
