@@ -24,6 +24,7 @@ jobs:
           uses: actions/download-artifact@v3
           with:
             name: ${{ inputs.artifact_name }}
+            path: ./dist
 
         - name: Upload to Azure
           uses: azure/CLI@v1
@@ -38,4 +39,4 @@ jobs:
                 --sas-token ${{ secrets.azure_credentials }} \
                 --account-name ${{ inputs.storage_account }} \
                 --auth-mode key -d ${{ inputs.container_name }} \
-                --destination-path "/" -s .
+                --destination-path "/" -s ./dist
