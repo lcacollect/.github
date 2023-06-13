@@ -25,9 +25,9 @@ It means that everyone can download the source code and contribute with features
 It is essential that the building industry can initiate a collective action for the green transition - that is why LCAcollect invites everyone to participate in our community on GitHub.
 
 We encourage everyone to participate and in order to ensure fairness we have adopted the Contributor Covenant Code of Conduct.
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md) 
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](/profile/CODE_OF_CONDUCT.md) 
 
-Please also see our [contributing](CONTRIBUTING.md) section.
+Please also see our [contributing](/profile/CONTRIBUTING.md) section.
 
 ## Code Repos:
 - [Frontend](https://github.com/lcacollect/frontend)
