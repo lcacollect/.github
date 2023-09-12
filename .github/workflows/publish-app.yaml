@@ -39,4 +39,4 @@ jobs:
                 --sas-token ${{ secrets.azure_credentials }} \
                 --account-name ${{ inputs.storage_account }} \
                 --auth-mode key -d ${{ inputs.container_name }} \
-                --destination-path "/" -s ./dist
+                --destination-path "/" --overwrite true -s ./dist
