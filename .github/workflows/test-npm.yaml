@@ -83,7 +83,7 @@ jobs:
           VITE_AAD_TENANT_ID: ${{ inputs.aad_tenant_id }}
           VITE_AAD_APP_CLIENT_ID: ${{ inputs.aad_app_client_id }}
           VITE_MUI_LICENSE: ${{ secrets.VITE_MUI_LICENSE }}
-          VITE_PROJECT_STAGE_LIST: "A1,A2,A3,C3,C4,D"
+          VITE_PROJECT_STAGE_LIST: "A1-A3,C3,C4,D"
 
       - name: Upload Artifact for Deployment
         uses: actions/upload-artifact@v3
