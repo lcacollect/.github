@@ -44,5 +44,4 @@ jobs:
                 --account-name ${{ inputs.storage_account }} \
                 --auth-mode key -d ${{ inputs.container_name }} \
                 --destination-path "/" \
-                --overwrite true \
                 -s ./dist
