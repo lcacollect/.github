@@ -25,8 +25,8 @@ jobs:
           with:
             name: ${{ inputs.artifact_name }}
             path: ./dist
-
-        - name: Upload to Azure
+            
+        - name: Clean Container
           uses: azure/CLI@v1
           with:
             inlineScript: |
@@ -35,8 +35,14 @@ jobs:
                 --account-name ${{ inputs.storage_account }} \
                 --source ${{ inputs.container_name }} \
                 --pattern "/*"
+        - name: Upload to Azure
+          uses: azure/CLI@v1
+          with:
+            inlineScript: |
               az storage blob upload-batch \
                 --sas-token ${{ secrets.azure_credentials }} \
                 --account-name ${{ inputs.storage_account }} \
                 --auth-mode key -d ${{ inputs.container_name }} \
-                --destination-path "/" --overwrite true -s ./dist
+                --destination-path "/" \
+                --overwrite true \
+                -s ./dist
