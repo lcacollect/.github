@@ -34,7 +34,7 @@ jobs:
                 --sas-token ${{ secrets.azure_credentials }} \
                 --account-name ${{ inputs.storage_account }} \
                 --source ${{ inputs.container_name }} \
-                --pattern "/*"
+                --pattern "*"
         - name: Upload to Azure
           uses: azure/CLI@v1
           with:
